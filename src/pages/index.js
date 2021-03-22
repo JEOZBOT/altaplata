@@ -18,7 +18,7 @@ const Homepage = () => {
   return (
     <>
       <div className="text-center">
-        <StaticImage src="../images/altaplata-2.jpg" alt="altaplata" />
+        <StaticImage src="../images/altaplata-3.jpg" alt="altaplata" />
       </div>
       <Modal
         show={show}
