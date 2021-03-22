@@ -1,29 +1,56 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import React, { useState, useEffect } from "react";
+import { StaticImage } from "gatsby-plugin-image";
+import { Modal, Container, Form, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+const Homepage = () => {
+  const [show, setShow] = useState(false);
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <StaticImage
-      src="../images/gatsby-astronaut.png"
-      width={300}
-      quality={95}
-      formats={["AUTO", "WEBP", "AVIF"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
-    <p>
-      <Link to="/page-2/">Go to page 2</Link> <br />
-      <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-    </p>
-  </Layout>
-)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShow(true);
+    }, 2000);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
 
-export default IndexPage
+  return (
+    <>
+      <div className="text-center">
+        <StaticImage src="../images/altaplata-2.jpg" alt="altaplata" />
+      </div>
+      <Modal
+        show={show}
+        onHide={() => {
+          setShow(false);
+        }}
+        size="lg"
+        centered
+      >
+        <Modal.Header closeButton />
+        <Modal.Body>
+          <Container>
+            <Form name="contact" data-netlify="true">
+              <Form.Group controlId="name">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control type="text" name="Nombre" />
+              </Form.Group>
+              <Form.Group controlId="phone">
+                <Form.Label>Teléfono</Form.Label>
+                <Form.Control type="tel" name="Teléfono" />
+              </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label>Correo</Form.Label>
+                <Form.Control type="email" name="Correo" />
+              </Form.Group>
+              <Button type="submit">Enviar</Button>
+            </Form>
+          </Container>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+};
+
+export default Homepage;
