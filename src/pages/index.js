@@ -148,7 +148,7 @@ const Homepage = () => {
               </Button>
               {formMsg && (
                 <Alert
-                  variant={formMsg.result === "success" ? "success" : "error"}
+                  variant={formMsg.result === "success" ? "success" : "danger"}
                 >
                   {formMsg.msg}
                 </Alert>
