@@ -94,67 +94,71 @@ const Homepage = () => {
               width={100}
             />
             <h2 className="h4">
-              Déjanos tus datos para recibir más información
+              {formMsg?.result === "success"
+                ? "¡Gracias!"
+                : "Déjanos tus datos para recibir más información"}
             </h2>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="name">
-                <Form.Label className="text-uppercase">Nombre</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="Nombre"
-                  value={formValues.name}
-                  onChange={e => {
-                    setFormValues(prevValue => ({
-                      ...prevValue,
-                      name: e.target.value,
-                    }));
-                  }}
-                />
-              </Form.Group>
-              <Form.Group controlId="phone">
-                <Form.Label className="text-uppercase">Teléfono</Form.Label>
-                <Form.Control
-                  type="tel"
-                  name="Teléfono"
-                  value={formValues.phone}
-                  onChange={e => {
-                    setFormValues(prevValue => ({
-                      ...prevValue,
-                      phone: e.target.value,
-                    }));
-                  }}
-                />
-              </Form.Group>
-              <Form.Group controlId="email">
-                <Form.Label className="text-uppercase">Correo</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="Correo"
-                  value={formValues.email}
-                  onChange={e => {
-                    setFormValues(prevValue => ({
-                      ...prevValue,
-                      email: e.target.value,
-                    }));
-                  }}
-                />
-              </Form.Group>
-              <Button
-                type="submit"
-                className="border-0"
-                style={{ background: "#000" }}
-              >
-                Enviar
-              </Button>
-              {formMsg && (
-                <Alert
-                  variant={formMsg.result === "success" ? "success" : "danger"}
-                  className="mt-3"
+            {formMsg?.result !== "success" && (
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="name">
+                  <Form.Label className="text-uppercase">Nombre</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="Nombre"
+                    value={formValues.name}
+                    onChange={e => {
+                      setFormValues(prevValue => ({
+                        ...prevValue,
+                        name: e.target.value,
+                      }));
+                    }}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="phone">
+                  <Form.Label className="text-uppercase">Teléfono</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    name="Teléfono"
+                    value={formValues.phone}
+                    onChange={e => {
+                      setFormValues(prevValue => ({
+                        ...prevValue,
+                        phone: e.target.value,
+                      }));
+                    }}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="email">
+                  <Form.Label className="text-uppercase">Correo</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="Correo"
+                    value={formValues.email}
+                    onChange={e => {
+                      setFormValues(prevValue => ({
+                        ...prevValue,
+                        email: e.target.value,
+                      }));
+                    }}
+                    required
+                  />
+                </Form.Group>
+                <Button
+                  type="submit"
+                  className="border-0"
+                  style={{ background: "#000" }}
                 >
-                  {formMsg.msg}
-                </Alert>
-              )}
-            </Form>
+                  Enviar
+                </Button>
+                {formMsg?.result === "error" && (
+                  <Alert variant="danger" className="mt-3">
+                    {formMsg.msg}
+                  </Alert>
+                )}
+              </Form>
+            )}
           </Container>
         </Modal.Body>
       </StyledModal>
