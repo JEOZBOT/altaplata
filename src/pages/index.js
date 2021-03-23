@@ -149,6 +149,7 @@ const Homepage = () => {
               {formMsg && (
                 <Alert
                   variant={formMsg.result === "success" ? "success" : "danger"}
+                  className="mt-3"
                 >
                   {formMsg.msg}
                 </Alert>
