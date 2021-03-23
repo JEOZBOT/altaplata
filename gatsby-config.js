@@ -30,6 +30,13 @@ module.exports = {
     },
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-styled-components`,
+    {
+      resolve: "gatsby-plugin-mailchimp",
+      options: {
+        endpoint:
+          "https://altaplata.us1.list-manage.com/subscribe/post?u=d60ff279596a2cbb92a7ca010&amp;id=d2d5f399ca",
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

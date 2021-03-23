@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StaticImage } from "gatsby-plugin-image";
-import { Modal, Container, Form, Button } from "react-bootstrap";
+import { Modal, Container, Form, Button, Alert } from "react-bootstrap";
+import addToMailchimp from "gatsby-plugin-mailchimp";
 import Seo from "../components/seo";
 import styled from "styled-components";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,8 +21,18 @@ const StyledModal = styled(Modal)`
   }
 `;
 
+const Footer = styled.footer`
+  background: #000;
+`;
+
 const Homepage = () => {
   const [show, setShow] = useState(false);
+  const [formMsg, setFormMsg] = useState(null);
+  const [formValues, setFormValues] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -31,6 +42,17 @@ const Homepage = () => {
       clearTimeout(timeout);
     };
   }, []);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const { email, phone, name } = formValues;
+    addToMailchimp(email, {
+      FNAME: name,
+      PHONE: phone,
+    }).then(data => {
+      setFormMsg(data);
+    });
+  };
 
   return (
     <Wrapper>
@@ -42,7 +64,7 @@ const Homepage = () => {
           className="d-block"
         />
       </div>
-      <footer className="bg-dark py-5">
+      <Footer className="py-5">
         <Container className="text-center">
           <p className="text-white mb-4">¿Deseas recibir más información?</p>
           <Button
@@ -54,7 +76,7 @@ const Homepage = () => {
             Déjanos tus datos
           </Button>
         </Container>
-      </footer>
+      </Footer>
       <StyledModal
         show={show}
         onHide={() => {
@@ -74,22 +96,63 @@ const Homepage = () => {
             <h2 className="h4">
               Déjanos tus datos para recibir más información
             </h2>
-            <Form name="contact" data-netlify="true">
+            <Form onSubmit={handleSubmit}>
               <Form.Group controlId="name">
                 <Form.Label className="text-uppercase">Nombre</Form.Label>
-                <Form.Control type="text" name="Nombre" />
+                <Form.Control
+                  type="text"
+                  name="Nombre"
+                  value={formValues.name}
+                  onChange={e => {
+                    setFormValues(prevValue => ({
+                      ...prevValue,
+                      name: e.target.value,
+                    }));
+                  }}
+                />
               </Form.Group>
               <Form.Group controlId="phone">
                 <Form.Label className="text-uppercase">Teléfono</Form.Label>
-                <Form.Control type="tel" name="Teléfono" />
+                <Form.Control
+                  type="tel"
+                  name="Teléfono"
+                  value={formValues.phone}
+                  onChange={e => {
+                    setFormValues(prevValue => ({
+                      ...prevValue,
+                      phone: e.target.value,
+                    }));
+                  }}
+                />
               </Form.Group>
               <Form.Group controlId="email">
                 <Form.Label className="text-uppercase">Correo</Form.Label>
-                <Form.Control type="email" name="Correo" />
+                <Form.Control
+                  type="email"
+                  name="Correo"
+                  value={formValues.email}
+                  onChange={e => {
+                    setFormValues(prevValue => ({
+                      ...prevValue,
+                      email: e.target.value,
+                    }));
+                  }}
+                />
               </Form.Group>
-              <Button type="submit" className="bg-dark border-0">
+              <Button
+                type="submit"
+                className="border-0"
+                style={{ background: "#000" }}
+              >
                 Enviar
               </Button>
+              {formMsg && (
+                <Alert
+                  variant={formMsg.result === "success" ? "success" : "error"}
+                >
+                  {formMsg.msg}
+                </Alert>
+              )}
             </Form>
           </Container>
         </Modal.Body>
