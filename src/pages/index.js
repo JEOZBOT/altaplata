@@ -8,8 +8,15 @@ import "@fontsource/roboto";
 
 const Wrapper = styled.div`
   font-family: "Roboto", sans-serif;
+`;
+
+const StyledModal = styled(Modal)`
   .modal-content {
-    background: #f6f6f6;
+    background: #e5e5e5;
+  }
+  label {
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
   }
 `;
 
@@ -29,9 +36,26 @@ const Homepage = () => {
     <Wrapper>
       <Seo title="AG Air life" />
       <div className="text-center">
-        <StaticImage src="../images/altaplata-3.jpg" alt="alta plata" />
+        <StaticImage
+          src="../images/altaplata-3.jpg"
+          alt="alta plata"
+          className="d-block"
+        />
       </div>
-      <Modal
+      <footer className="bg-dark py-5">
+        <Container className="text-center">
+          <p className="text-white mb-4">¿Deseas recibir más información?</p>
+          <Button
+            variant="outline-light"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            Déjanos tus datos
+          </Button>
+        </Container>
+      </footer>
+      <StyledModal
         show={show}
         onHide={() => {
           setShow(false);
@@ -52,15 +76,15 @@ const Homepage = () => {
             </h2>
             <Form name="contact" data-netlify="true">
               <Form.Group controlId="name">
-                <Form.Label>Nombre</Form.Label>
+                <Form.Label className="text-uppercase">Nombre</Form.Label>
                 <Form.Control type="text" name="Nombre" />
               </Form.Group>
               <Form.Group controlId="phone">
-                <Form.Label>Teléfono</Form.Label>
+                <Form.Label className="text-uppercase">Teléfono</Form.Label>
                 <Form.Control type="tel" name="Teléfono" />
               </Form.Group>
               <Form.Group controlId="email">
-                <Form.Label>Correo</Form.Label>
+                <Form.Label className="text-uppercase">Correo</Form.Label>
                 <Form.Control type="email" name="Correo" />
               </Form.Group>
               <Button type="submit" className="bg-dark border-0">
@@ -69,7 +93,7 @@ const Homepage = () => {
             </Form>
           </Container>
         </Modal.Body>
-      </Modal>
+      </StyledModal>
     </Wrapper>
   );
 };
