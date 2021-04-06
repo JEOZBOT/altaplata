@@ -61,7 +61,7 @@ const Homepage = () => {
         <StaticImage
           src="../images/altaplata-3.jpg"
           alt="alta plata"
-          className="d-block"
+          layout="fullWidth"
         />
       </div>
       <Footer className="py-5">
